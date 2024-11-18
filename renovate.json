@@ -13,9 +13,18 @@
   ],
   "packageRules": [
     {
-      "matchManagers": [
-        "dockerfile"
-      ],
+      "matchManagers": ["gomod"],
+      "matchUpdateTypes": ["pin", "pinDigest", "digest", "lockFileMaintenance", "rollback", "bump", "replacement"],
+      "labels": ["something"]
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchUpdateTypes": ["major"],
+      "prBodyNotes": [":warning: MAJOR VERSION UPDATE :warning: - please manually update this package"],
+      "labels": ["dependency-major-update"]
+    },
+    {
+      "matchManagers": ["dockerfile"],
       "groupName": "dockerfile deps"
     },
     {
@@ -85,6 +94,11 @@
       ]
     },
     {
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["toolchain"],
+      "labels": ["something"]
+    },
+    {
       "matchManagers": [
         "custom.regex"
       ],
@@ -92,6 +106,12 @@
         "goreleaser/goreleaser-pro"
       ],
       "extractVersion": "^(?<version>.*)-pro$"
+    },
+    {
+      "matchPackageNames": [
+        "goreleaser-pro"
+      ],
+      "groupName": "GoReleaser Pro"
     }
   ],
   "prConcurrentLimit": 200,
