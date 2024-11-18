@@ -4,9 +4,6 @@
     "renovatebot",
     "dependencies"
   ],
-  "constraints": {
-    "go": "1.22"
-  },
   "extends": ["config:recommended", "customManagers:githubActionsVersions"],
   "packageRules": [
     {
