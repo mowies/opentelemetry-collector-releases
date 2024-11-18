@@ -7,7 +7,6 @@
   "constraints": {
     "go": "1.22"
   },
-  "schedule": ["on tuesday"],
   "extends": ["config:recommended", "customManagers:githubActionsVersions"],
   "packageRules": [
     {
