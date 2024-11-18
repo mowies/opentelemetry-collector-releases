@@ -80,7 +80,7 @@
       "matchStrings": [
         "goreleaser\\/goreleaser-action@[\\S\\s]+?version: (?<currentValue>.*?)$"
       ],
-      "depNameTemplate": "github.com/goreleaser/goreleaser-pro",
+      "depNameTemplate": "goreleaser/goreleaser-pro",
       "datasourceTemplate": "github-releases"
     }
   ],
