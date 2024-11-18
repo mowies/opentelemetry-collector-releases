@@ -7,58 +7,95 @@
   "constraints": {
     "go": "1.22"
   },
-  "extends": ["config:recommended", "customManagers:githubActionsVersions"],
+  "extends": [
+    "config:recommended",
+    "customManagers:githubActionsVersions"
+  ],
   "packageRules": [
     {
-      "matchManagers": ["dockerfile"],
+      "matchManagers": [
+        "dockerfile"
+      ],
       "groupName": "dockerfile deps"
     },
     {
-      "matchManagers": ["docker-compose"],
+      "matchManagers": [
+        "docker-compose"
+      ],
       "groupName": "docker-compose deps"
     },
     {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "groupName": "github-actions deps"
     },
     {
-      "matchManagers": ["gomod"],
+      "matchManagers": [
+        "gomod"
+      ],
       "matchSourceUrls": [
         "https://github.com/open-telemetry/opentelemetry-go-contrib"
       ],
       "groupName": "All opentelemetry-go-contrib packages"
     },
     {
-      "matchManagers": ["gomod"],
-      "matchSourceUrlPrefixes": ["https://go.opentelemetry.io/otel"],
-      "groupName": "All go.opentelemetry.io/contrib packages"
+      "matchManagers": [
+        "gomod"
+      ],
+      "groupName": "All go.opentelemetry.io/contrib packages",
+      "matchSourceUrls": [
+        "https://go.opentelemetry.io/otel{/,}**"
+      ]
     },
     {
-      "matchManagers": ["gomod"],
-      "matchSourceUrlPrefixes": ["https://google.golang.org"],
-      "groupName": "All google.golang.org packages"
+      "matchManagers": [
+        "gomod"
+      ],
+      "groupName": "All google.golang.org packages",
+      "matchSourceUrls": [
+        "https://google.golang.org{/,}**"
+      ]
     },
     {
-      "matchManagers": ["gomod"],
-      "matchPackagePrefixes": ["golang.org/x"],
-      "groupName": "All golang.org/x packages"
+      "matchManagers": [
+        "gomod"
+      ],
+      "groupName": "All golang.org/x packages",
+      "matchPackageNames": [
+        "golang.org/x{/,}**"
+      ]
     },
     {
-      "matchManagers": ["gomod"],
-      "matchPackagePrefixes": ["go.opentelemetry.io/collector"],
-      "groupName": "All go.opentelemetry.io/collector packages"
+      "matchManagers": [
+        "gomod"
+      ],
+      "groupName": "All go.opentelemetry.io/collector packages",
+      "matchPackageNames": [
+        "go.opentelemetry.io/collector{/,}**"
+      ]
     },
     {
-      "matchManagers": ["gomod"],
-      "matchPackagePrefixes": ["go.opentelemetry.io/build-tools"],
-      "groupName": "All go.opentelemetry.io/build-tools packages"
+      "matchManagers": [
+        "gomod"
+      ],
+      "groupName": "All go.opentelemetry.io/build-tools packages",
+      "matchPackageNames": [
+        "go.opentelemetry.io/build-tools{/,}**"
+      ]
     },
     {
-      "matchManagers": ["regex"],
-      "matchPackageNames": ["goreleaser/goreleaser-pro"],
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "goreleaser/goreleaser-pro"
+      ],
       "extractVersion": "^(?<version>.*)-pro$"
     }
   ],
   "prConcurrentLimit": 200,
-  "suppressNotifications": ["prEditedNotification"]
+  "suppressNotifications": [
+    "prEditedNotification"
+  ]
 }
