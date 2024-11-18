@@ -7,5 +7,16 @@
   "extends": [
     "config:recommended",
     "customManagers:githubActionsVersions"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "custom.regex",
+      ],
+      "matchPackageNames": [
+        "goreleaser/goreleaser-pro"
+      ],
+      "extractVersion": "^(?<version>.*)-pro$"
+    }
   ]
 }
