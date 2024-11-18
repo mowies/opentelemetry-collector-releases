@@ -14,7 +14,9 @@
         "custom.regex"
       ],
       "matchPackageNames": [
-        "goreleaser/goreleaser-pro"
+        "goreleaser/goreleaser-pro",
+        "github.com/goreleaser/goreleaser-pro/v2",
+        "github.com/goreleaser/goreleaser-pro"
       ],
       "extractVersion": "^(?<version>.*)-pro$"
     }
