@@ -12,7 +12,6 @@
     {
       "matchManagers": ["gomod"],
       "matchUpdateTypes": ["pin", "pinDigest", "digest", "lockFileMaintenance", "rollback", "bump", "replacement"],
-      "enabled": false
     },
     {
       "matchManagers": ["gomod"],
