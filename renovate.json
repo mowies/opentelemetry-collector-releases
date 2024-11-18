@@ -76,19 +76,6 @@
       "extractVersion": "^(?<version>.*)-pro$"
     }
   ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "(^|\\/).github\\/.*\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "goreleaser\\/goreleaser-action@[\\S\\s]+?version: (?<currentValue>.*?)$"
-      ],
-      "depNameTemplate": "github.com/goreleaser/goreleaser-pro",
-      "datasourceTemplate": "github-releases"
-    }
-  ],
   "prConcurrentLimit": 200,
   "suppressNotifications": ["prEditedNotification"]
 }
