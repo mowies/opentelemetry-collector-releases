@@ -11,7 +11,15 @@
   "packageRules": [
     {
       "matchManagers": [
-        "custom.regex",
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "goreleaser/goreleaser-pro"
+      ],
+      "extractVersion": "^(?<version>.*)-pro$"
+    },
+    {
+      "matchManagers": [
         "gomod"
       ],
       "matchPackageNames": [
@@ -19,7 +27,7 @@
         "github.com/goreleaser/goreleaser-pro/v2",
         "github.com/goreleaser/goreleaser-pro"
       ],
-      "extractVersion": "^(?<version>.*)-pro$"
+      "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?-(?<compatibility>.*)$"
     }
   ]
 }
