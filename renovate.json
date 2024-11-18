@@ -11,7 +11,7 @@
   "packageRules": [
     {
       "matchManagers": [
-        "custom.regex",
+        "custom.regex"
       ],
       "matchPackageNames": [
         "goreleaser/goreleaser-pro"
