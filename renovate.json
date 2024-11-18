@@ -8,7 +8,7 @@
     "go": "1.22"
   },
   "schedule": ["on tuesday"],
-  "extends": ["config:recommended"],
+  "extends": ["config:recommended", "customManagers:githubActionsVersions"],
   "packageRules": [
     {
       "matchManagers": ["gomod"],
@@ -77,19 +77,6 @@
       "matchManagers": ["gomod"],
       "matchDepTypes": ["toolchain"],
       "enabled": false
-    }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "(^|\\/).github\\/.*\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "goreleaser\\/goreleaser-action@[\\S\\s]+?version: (?<currentValue>.+?)\\n"
-      ],
-      "depNameTemplate": "goreleaser/goreleaser-pro",
-      "datasourceTemplate": "github-releases"
     }
   ],
   "prConcurrentLimit": 200,
