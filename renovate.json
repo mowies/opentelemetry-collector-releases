@@ -24,9 +24,5 @@
       ],
       "groupName": "GoReleaser Pro"
     }
-  ],
-  "prConcurrentLimit": 200,
-  "suppressNotifications": [
-    "prEditedNotification"
   ]
 }
