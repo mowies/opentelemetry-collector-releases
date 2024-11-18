@@ -19,12 +19,6 @@
         "goreleaser/goreleaser-pro"
       ],
       "extractVersion": "^(?<version>.*)-pro$"
-    },
-    {
-      "matchPackageNames": [
-        "goreleaser-pro"
-      ],
-      "groupName": "GoReleaser Pro"
     }
   ]
 }
