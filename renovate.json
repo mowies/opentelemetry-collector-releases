@@ -5,8 +5,7 @@
     "dependencies"
   ],
   "extends": [
-    "config:recommended",
-    "customManagers:githubActionsVersions"
+    "config:recommended"
   ],
   "minimumReleaseAge": "0 days",
   "packageRules": [
