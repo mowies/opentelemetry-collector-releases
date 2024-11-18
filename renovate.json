@@ -69,6 +69,11 @@
       "matchManagers": ["gomod"],
       "matchDepTypes": ["toolchain"],
       "enabled": false
+    },
+    {
+      "matchManagers": ["regex"],
+      "matchPackageNames": ["goreleaser/goreleaser-pro"],
+      "extractVersion": "^(?<version>.*)-pro$"
     }
   ],
   "customManagers": [
