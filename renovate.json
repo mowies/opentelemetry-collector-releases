@@ -76,6 +76,11 @@
       "matchManagers": ["gomod"],
       "matchDepTypes": ["toolchain"],
       "enabled": false
+    },
+    {
+      "matchManagers": ["regex"],
+      "matchPackageNames": ["goreleaser/goreleaser-pro"],
+      "extractVersionTemplate": "^(?<version>.*)-pro$"
     }
   ],
   "prConcurrentLimit": 200,
