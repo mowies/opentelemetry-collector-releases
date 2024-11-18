@@ -69,11 +69,6 @@
       "matchManagers": ["gomod"],
       "matchDepTypes": ["toolchain"],
       "enabled": false
-    },
-    {
-      "matchManagers": ["regex"],
-      "matchPackageNames": ["goreleaser/goreleaser-pro"],
-      "extractVersion": "^(?<version>.*)-pro$"
     }
   ],
   "customManagers": [
@@ -86,7 +81,8 @@
         "goreleaser\\/goreleaser-action@[\\S\\s]+?version: (?<currentValue>.*?)$"
       ],
       "depNameTemplate": "github.com/goreleaser/goreleaser-pro",
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^(?<version>.*)-pro$"
     }
   ],
   "prConcurrentLimit": 200,
