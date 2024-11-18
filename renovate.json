@@ -67,7 +67,7 @@
     {
       "matchManagers": ["gomod"],
       "matchDepTypes": ["toolchain"],
-      "enabled": false
+      "labels": ["something"]
     },
     {
       "matchManagers": ["regex"],
