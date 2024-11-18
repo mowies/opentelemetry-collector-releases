@@ -80,7 +80,7 @@
     {
       "matchManagers": ["regex"],
       "matchPackageNames": ["goreleaser/goreleaser-pro"],
-      "extractVersionTemplate": "^(?<version>.*)-pro$"
+      "extractVersion": "^(?<version>.*)-pro$"
     }
   ],
   "prConcurrentLimit": 200,
