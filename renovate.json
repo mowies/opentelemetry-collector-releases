@@ -7,12 +7,20 @@
   "constraints": {
     "go": "1.22"
   },
-  "schedule": ["every tuesday"],
+  "schedule": ["on tuesday"],
   "extends": ["config:recommended"],
   "packageRules": [
     {
       "matchManagers": ["gomod"],
-      "matchUpdateTypes": ["pin", "pinDigest", "digest", "lockFileMaintenance", "rollback", "bump", "replacement"],
+      "matchUpdateTypes": [
+        "pin",
+        "pinDigest",
+        "digest",
+        "lockFileMaintenance",
+        "rollback",
+        "bump",
+        "replacement"
+      ],
       "enabled": false
     },
     {
@@ -42,27 +50,27 @@
     },
     {
       "matchManagers": ["gomod"],
-      "matchSourceUrlPrefixes": ["https://go.opentelemetry.io/otel"],
+      "matchSourceUrls": ["https://go.opentelemetry.io/otel{/,}**"],
       "groupName": "All go.opentelemetry.io/contrib packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchSourceUrlPrefixes": ["https://google.golang.org"],
+      "matchSourceUrls": ["https://google.golang.org{/,}**"],
       "groupName": "All google.golang.org packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackagePrefixes": ["golang.org/x"],
+      "matchPackageNames": ["golang.org/x{/,}**"],
       "groupName": "All golang.org/x packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackagePrefixes": ["go.opentelemetry.io/collector"],
+      "matchPackageNames": ["go.opentelemetry.io/collector{/,}**"],
       "groupName": "All go.opentelemetry.io/collector packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackagePrefixes": ["go.opentelemetry.io/build-tools"],
+      "matchPackageNames": ["go.opentelemetry.io/build-tools{/,}**"],
       "groupName": "All go.opentelemetry.io/build-tools packages"
     },
     {
