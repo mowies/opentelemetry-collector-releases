@@ -7,19 +7,12 @@
   "constraints": {
     "go": "1.22"
   },
+  "schedule": ["every tuesday"],
   "extends": ["config:recommended", "customManagers:githubActionsVersions"],
   "packageRules": [
     {
       "matchManagers": ["gomod"],
-      "matchUpdateTypes": [
-        "pin",
-        "pinDigest",
-        "digest",
-        "lockFileMaintenance",
-        "rollback",
-        "bump",
-        "replacement"
-      ],
+      "matchUpdateTypes": ["pin", "pinDigest", "digest", "lockFileMaintenance", "rollback", "bump", "replacement"],
       "enabled": false
     },
     {
@@ -49,38 +42,46 @@
     },
     {
       "matchManagers": ["gomod"],
-      "matchSourceUrls": ["https://go.opentelemetry.io/otel{/,}**"],
+      "matchSourceUrlPrefixes": ["https://go.opentelemetry.io/otel"],
       "groupName": "All go.opentelemetry.io/contrib packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchSourceUrls": ["https://google.golang.org{/,}**"],
+      "matchSourceUrlPrefixes": ["https://google.golang.org"],
       "groupName": "All google.golang.org packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackageNames": ["golang.org/x{/,}**"],
+      "matchPackagePrefixes": ["golang.org/x"],
       "groupName": "All golang.org/x packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackageNames": ["go.opentelemetry.io/collector{/,}**"],
+      "matchPackagePrefixes": ["go.opentelemetry.io/collector"],
       "groupName": "All go.opentelemetry.io/collector packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackageNames": ["go.opentelemetry.io/build-tools{/,}**"],
+      "matchPackagePrefixes": ["go.opentelemetry.io/build-tools"],
       "groupName": "All go.opentelemetry.io/build-tools packages"
     },
     {
       "matchManagers": ["gomod"],
       "matchDepTypes": ["toolchain"],
       "enabled": false
-    },
+    }
+  ],
+  "customManagers": [
     {
-      "matchManagers": ["regex"],
-      "matchPackageNames": ["goreleaser/goreleaser-pro"],
-      "extractVersion": "^(?<version>.*)-pro$"
+      "customType": "regex",
+      "fileMatch": [
+        "(^|\\/).github\\/.*\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "goreleaser\\/goreleaser-action@[\\S\\s]+?version: (?<currentValue>.*?)$"
+      ],
+      "depNameTemplate": "github.com/goreleaser/goreleaser-pro",
+      "datasourceTemplate": "github-releases"
     }
   ],
   "prConcurrentLimit": 200,
