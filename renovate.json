@@ -7,7 +7,6 @@
   "constraints": {
     "go": "1.22"
   },
-  "schedule": ["every tuesday"],
   "extends": ["config:recommended", "customManagers:githubActionsVersions"],
   "packageRules": [
     {
@@ -74,6 +73,12 @@
       "matchManagers": ["regex"],
       "matchPackageNames": ["goreleaser/goreleaser-pro"],
       "extractVersion": "^(?<version>.*)-pro$"
+    },
+    {
+      "matchPackageNames": [
+        "goreleaser-pro"
+      ],
+      "groupName": "GoReleaser Pro"
     }
   ],
   "prConcurrentLimit": 200,
