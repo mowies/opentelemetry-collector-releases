@@ -50,28 +50,28 @@
     },
     {
       "matchManagers": ["gomod"],
-      "matchSourceUrls": ["https://go.opentelemetry.io/otel{/,}**"]
-      "groupName": "All go.opentelemetry.io/contrib packages",
+      "matchSourceUrls": ["https://go.opentelemetry.io/otel{/,}**"],
+      "groupName": "All go.opentelemetry.io/contrib packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchSourceUrls": ["https://google.golang.org{/,}**"]
-      "groupName": "All google.golang.org packages",
+      "matchSourceUrls": ["https://google.golang.org{/,}**"],
+      "groupName": "All google.golang.org packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackageNames": ["golang.org/x{/,}**"]
-      "groupName": "All golang.org/x packages",
+      "matchPackageNames": ["golang.org/x{/,}**"],
+      "groupName": "All golang.org/x packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackageNames": ["go.opentelemetry.io/collector{/,}**"]
-      "groupName": "All go.opentelemetry.io/collector packages",
+      "matchPackageNames": ["go.opentelemetry.io/collector{/,}**"],
+      "groupName": "All go.opentelemetry.io/collector packages"
     },
     {
       "matchManagers": ["gomod"],
-      "matchPackageNames": ["go.opentelemetry.io/build-tools{/,}**"]
-      "groupName": "All go.opentelemetry.io/build-tools packages",
+      "matchPackageNames": ["go.opentelemetry.io/build-tools{/,}**"],
+      "groupName": "All go.opentelemetry.io/build-tools packages"
     },
     {
       "matchManagers": ["gomod"],
