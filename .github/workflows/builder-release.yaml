@@ -22,14 +22,14 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
-      - name: Push cmd/builder Tag
-        run: |
-          tag="cmd/builder/${{ github.ref_name }}"
-          message="Releasing ocb binaries for ${{ github.ref_name }}"
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git tag -a "${tag}" -m "${message}"
-          git push origin "${tag}"
+#      - name: Push cmd/builder Tag
+#        run: |
+#          tag="cmd/builder/${{ github.ref_name }}"
+#          message="Releasing ocb binaries for ${{ github.ref_name }}"
+#          git config user.name "${GITHUB_ACTOR}"
+#          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+#          git tag -a "${tag}" -m "${message}"
+#          git push origin "${tag}"
       - name: Checkout Core Repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
