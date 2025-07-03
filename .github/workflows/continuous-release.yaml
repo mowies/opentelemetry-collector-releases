@@ -110,7 +110,7 @@ jobs:
           GOAMD64: v1
           GOPPC64: power8
           GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COSIGN_YES: true
 
       - name: Move built artifacts
@@ -128,12 +128,12 @@ jobs:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: release --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md
+          args: release --prepare --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md
         env:
           GOOS: ${{ matrix.GOOS }}
           GOARCH: ${{ matrix.GOARCH }}
           GOARM: 7 # Default is 6
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COSIGN_YES: true
           GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
 
