@@ -1,26 +1,6 @@
 name: Reusable release workflow
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "distributions/otelcol/**"
-      - "cmd/**"
-      - ".github/**"
-      - "scripts/**"
-      - "Makefile"
-      - "go.mod"
-      - "go.sum"
-  pull_request:
-    branches: [main]
-    paths:
-      - "distributions/otelcol/**"
-      - "cmd/**"
-      - ".github/**"
-      - "scripts/**"
-      - "Makefile"
-      - "go.mod"
-      - "go.sum"
   workflow_call:
     inputs:
       distribution:
