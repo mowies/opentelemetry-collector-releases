@@ -86,7 +86,7 @@ jobs:
         id: nightly-check
         if: contains(github.ref, '-nightly')
         run: |
-          echo "NIGHTLY_FLAG='--nightly'" >> "$GITHUB_OUTPUT"
+          echo "NIGHTLY_FLAG=--nightly" >> "$GITHUB_OUTPUT"
 
       - name: Generate distribution sources
         run: make generate-sources
