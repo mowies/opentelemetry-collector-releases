@@ -1,19 +1,50 @@
-name: Nightly Release
+name: CI - Core - GoReleaser
 
 on:
-  workflow_dispatch:
-  merge_group: 
+  merge_group:
   push:
     branches: [main]
+    paths:
+      - "distributions/otelcol/**"
+      - "cmd/**"
+      - ".github/**"
+      - "scripts/**"
+      - "Makefile"
+      - "go.mod"
+      - "go.sum"
   pull_request:
     branches: [main]
+    paths:
+      - "distributions/otelcol/**"
+      - "cmd/**"
+      - ".github/**"
+      - "scripts/**"
+      - "Makefile"
+      - "go.mod"
+      - "go.sum"
 
 jobs:
-  nightly-release:
+  check-goreleaser:
     name: CI - Core - GoReleaser
-    uses: ./.github/workflows/continuous-release.yaml
+    uses: ./.github/workflows/base-ci-goreleaser.yaml
     with:
       distribution: otelcol
-      goos: '[ "linux" ]'
-      goarch: '[ "amd64", "arm64" ]'
+      goos: '[ "linux", "windows", "darwin" ]'
+      goarch: '[ "386", "amd64", "arm64", "ppc64le", "arm", "s390x" ]'
     secrets: inherit
+
+  package-tests:
+    name: Package tests
+    needs: check-goreleaser
+    uses: ./.github/workflows/base-package-tests.yaml
+    with:
+      distribution: otelcol
+      type: '[ "deb", "rpm" ]'
+
+  msi-tests:
+    name: MSI tests
+    needs: check-goreleaser
+    uses: ./.github/workflows/msi-tests.yaml
+    with:
+      distribution: otelcol
+      type: '[ "msi" ]'
