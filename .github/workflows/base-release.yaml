@@ -23,6 +23,9 @@ env:
 
 jobs:
   prepare:
+    outputs:
+      GORELEASER_PREVIOUS_TAG: ${{ steps.prev-tag.outputs.GORELEASER_PREVIOUS_TAG }}
+      NIGHTLY_FLAG: ${{ steps.nightly-check.outputs.NIGHTLY_FLAG }}
     strategy:
       matrix:
         GOOS: ${{ fromJSON(inputs.goos) }}
@@ -70,6 +73,21 @@ jobs:
           go-version: "~1.24"
           check-latest: true
 
+      - name: Set GORELEASER_PREVIOUS_TAG in actual release
+        id: prev-tag
+        if: ${{ !contains(github.ref, '-nightly') }}
+        # find previous tag by filtering out nightly tags and choosing the
+        # second to last tag (last one is the current release)
+        run: |
+          prev_tag=$(git tag | grep -v "nightly" | sort -r --version-sort | head -n 2 | tail -n 1)
+          echo "GORELEASER_PREVIOUS_TAG=$prev_tag" >> "$GITHUB_OUTPUT"
+
+      - name: Set nightly enabled
+        id: nightly-check
+        if: contains(github.ref, '-nightly')
+        run: |
+          echo "NIGHTLY_FLAG='--nightly'" >> "$GITHUB_OUTPUT"
+
       - name: Generate distribution sources
         run: make generate-sources
 
@@ -109,6 +127,7 @@ jobs:
           GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           COSIGN_YES: true
+          GORELEASER_CURRENT_TAG: ${{ github.ref_name }}
 
       - name: Move built artifacts
         if: inputs.distribution == 'otelcol-contrib'
@@ -125,7 +144,7 @@ jobs:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: release --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md
+          args: release --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md ${{ needs.prepare.outputs.NIGHTLY_FLAG }}
         env:
           GOOS: ${{ matrix.GOOS }}
           GOARCH: ${{ matrix.GOARCH }}
@@ -225,8 +244,10 @@ jobs:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: continue --merge --timeout 2h
+          args: continue --merge --timeout 2h ${{ needs.prepare.outputs.NIGHTLY_FLAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COSIGN_YES: true
           GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
+          GORELEASER_PREVIOUS_TAG: ${{ needs.prepare.outputs.GORELEASER_PREVIOUS_TAG }}
+          GORELEASER_CURRENT_TAG: ${{ github.ref_name }}
