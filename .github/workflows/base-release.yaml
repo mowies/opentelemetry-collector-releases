@@ -117,7 +117,7 @@ jobs:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: release --clean --split --timeout 2h --config .goreleaser-build.yaml --release-header-tmpl=../../.github/release-template.md
+          args: release --clean --split --timeout 2h --config .goreleaser-build.yaml --release-header-tmpl=../../.github/release-template.md ${{ steps.prepare.outputs.NIGHTLY_FLAG }}
         env:
           GOOS: ${{ matrix.GOOS }}
           GOARCH: ${{ matrix.GOARCH }}
@@ -144,7 +144,7 @@ jobs:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: release --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md ${{ needs.prepare.outputs.NIGHTLY_FLAG }}
+          args: release --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md ${{ steps.prepare.outputs.NIGHTLY_FLAG }}
         env:
           GOOS: ${{ matrix.GOOS }}
           GOARCH: ${{ matrix.GOARCH }}
