@@ -1,4 +1,4 @@
-name: Reusable release workflow
+name: Continuous Release
 
 on:
   workflow_call:
@@ -60,13 +60,13 @@ jobs:
 
         # Fix slow Go compile and cache restore
         # See https://github.com/actions/setup-go/pull/515
-      - name: Fix slow setup-go cache restore in Windows
-        if: runner.os == 'Windows'
-        run: |
-          echo "GOCACHE=D:\gocache" | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "GOMODCACHE=D:\gomodcache" | Out-File -FilePath $env:GITHUB_ENV -Append
-          echo "GOTMPDIR=D:\gotmp" | Out-File -FilePath $env:GITHUB_ENV -Append
-          mkdir D:\gotmp
+#      - name: Fix slow setup-go cache restore in Windows
+#        if: runner.os == 'Windows'
+#        run: |
+#          echo "GOCACHE=D:\gocache" | Out-File -FilePath $env:GITHUB_ENV -Append
+#          echo "GOMODCACHE=D:\gomodcache" | Out-File -FilePath $env:GITHUB_ENV -Append
+#          echo "GOTMPDIR=D:\gotmp" | Out-File -FilePath $env:GITHUB_ENV -Append
+#          mkdir D:\gotmp
 
       - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
         with:
@@ -128,7 +128,7 @@ jobs:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: release --prepare --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md
+          args: release --prepare --nightly --clean --split --timeout 2h --release-header-tmpl=../../.github/release-template.md
         env:
           GOOS: ${{ matrix.GOOS }}
           GOARCH: ${{ matrix.GOARCH }}
@@ -143,8 +143,8 @@ jobs:
           path: distributions/${{ inputs.distribution }}/dist/**/*
           if-no-files-found: error
 
-  release:
-    name: ${{ inputs.distribution }} Release
+  nightly-release:
+    name: ${{ inputs.distribution }} Nightly Release
     runs-on: ${{ inputs.runner_os }}
     needs: prepare
 
@@ -210,25 +210,25 @@ jobs:
         shell: bash
         run: ls -R distributions/${{ inputs.distribution }}/dist
 
-      - name: Log into Docker.io
-        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+#      - name: Log into Docker.io
+#        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Login to GitHub Package Registry
-        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Login to GitHub Package Registry
+#        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.repository_owner }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: goreleaser/goreleaser-action@9c156ee8a17a598857849441385a2041ef570552 # v6.3.0
         with:
           distribution: goreleaser-pro
           version: ${{ env.GORELEASER_PRO_VERSION }}
           workdir: distributions/${{ inputs.distribution }}
-          args: continue --merge --timeout 2h
+          args: continue --merge --nightly --timeout 2h
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COSIGN_YES: true

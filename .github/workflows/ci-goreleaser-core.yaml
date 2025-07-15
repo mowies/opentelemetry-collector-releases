@@ -1,6 +1,7 @@
-name: CI - Core - GoReleaser
+name: Nightly Release
 
 on:
+  workflow_dispatch:
   merge_group: 
   push:
     branches: [main]
@@ -8,7 +9,7 @@ on:
     branches: [main]
 
 jobs:
-  check-goreleaser:
+  nightly-release:
     name: CI - Core - GoReleaser
     uses: ./.github/workflows/continuous-release.yaml
     with:
