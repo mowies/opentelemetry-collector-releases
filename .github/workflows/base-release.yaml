@@ -18,7 +18,7 @@ on:
         default: ubuntu-24.04
       nightly:
         required: false
-        type: boolean
+        type: string
         default: false
 
 env:
