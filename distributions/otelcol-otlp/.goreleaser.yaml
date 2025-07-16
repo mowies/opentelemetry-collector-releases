@@ -305,6 +305,6 @@ monorepo:
 partial:
   by: target
 nightly:
-  version_template: '{{ incpatch .Version}}-nightly.{{ .Now.Format 200607310413 }}'
+  version_template: '{{ incpatch .Version}}-nightly.{{ .Now.Format "200607310413" }}'
   tag_name: nightly
   publish_release: true
