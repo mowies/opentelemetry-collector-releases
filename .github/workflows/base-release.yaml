@@ -16,6 +16,10 @@ on:
         required: false
         type: string
         default: ubuntu-24.04
+      nightly:
+        required: false
+        type: boolean
+        default: false
 
 env:
   # renovate: datasource=github-tags depName=goreleaser-pro packageName=goreleaser/goreleaser-pro
@@ -74,7 +78,7 @@ jobs:
 
       - name: Set GORELEASER_PREVIOUS_TAG in actual release
         id: prev-tag
-        if: ${{ !contains(github.ref, '-nightly') }}
+        if: inputs.nightly != 'true'
         # find previous tag by filtering out nightly tags and choosing the
         # second to last tag (last one is the current release)
         run: |
@@ -83,7 +87,7 @@ jobs:
 
       - name: Set nightly enabled
         id: nightly-check
-        if: contains(github.ref, '-nightly')
+        if: inputs.nightly == 'true'
         run: |
           echo "NIGHTLY_FLAG=--nightly" >> "$GITHUB_OUTPUT"
 
