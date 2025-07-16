@@ -49,9 +49,9 @@ dockers:
     dockerfile: Dockerfile
     image_templates:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-amd64
-      - mowies/opentelemetry-collector-k8s:latest-amd64
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-amd64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-amd64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-amd64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-amd64
     build_flag_templates:
       - --pull
       - --platform=linux/amd64
@@ -67,9 +67,9 @@ dockers:
     dockerfile: Dockerfile
     image_templates:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-arm64
-      - mowies/opentelemetry-collector-k8s:latest-arm64
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-arm64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-arm64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-arm64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-arm64
     build_flag_templates:
       - --pull
       - --platform=linux/arm64
@@ -85,9 +85,9 @@ dockers:
     dockerfile: Dockerfile
     image_templates:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-ppc64le
-      - mowies/opentelemetry-collector-k8s:latest-ppc64le
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-ppc64le
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-ppc64le
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-ppc64le
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-ppc64le
     build_flag_templates:
       - --pull
       - --platform=linux/ppc64le
@@ -103,9 +103,9 @@ dockers:
     dockerfile: Dockerfile
     image_templates:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-s390x
-      - mowies/opentelemetry-collector-k8s:latest-s390x
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-s390x
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-s390x
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-s390x
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-s390x
     build_flag_templates:
       - --pull
       - --platform=linux/s390x
@@ -121,9 +121,9 @@ dockers:
     dockerfile: Windows.dockerfile
     image_templates:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-windows-2019-amd64
-      - mowies/opentelemetry-collector-k8s:latest-windows-2019-amd64
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-windows-2019-amd64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-windows-2019-amd64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-windows-2019-amd64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-windows-2019-amd64
     skip_build: '{{ not (eq .Runtime.Goos "windows") }}'
     skip_push: '{{ not (eq .Runtime.Goos "windows") }}'
     build_flag_templates:
@@ -142,9 +142,9 @@ dockers:
     dockerfile: Windows.dockerfile
     image_templates:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-windows-2022-amd64
-      - mowies/opentelemetry-collector-k8s:latest-windows-2022-amd64
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-windows-2022-amd64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-windows-2022-amd64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-windows-2022-amd64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-windows-2022-amd64
     skip_build: '{{ not (eq .Runtime.Goos "windows") }}'
     skip_push: '{{ not (eq .Runtime.Goos "windows") }}'
     build_flag_templates:
@@ -165,24 +165,24 @@ docker_manifests:
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-arm64
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-ppc64le
       - mowies/opentelemetry-collector-k8s:{{ .Version }}-s390x
-  - name_template: mowies/opentelemetry-collector-k8s:latest
+  - name_template: mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}
     image_templates:
-      - mowies/opentelemetry-collector-k8s:latest-amd64
-      - mowies/opentelemetry-collector-k8s:latest-arm64
-      - mowies/opentelemetry-collector-k8s:latest-ppc64le
-      - mowies/opentelemetry-collector-k8s:latest-s390x
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-amd64
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-arm64
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-ppc64le
+      - mowies/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-s390x
   - name_template: ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}
     image_templates:
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-amd64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-arm64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-ppc64le
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ .Version }}-s390x
-  - name_template: ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest
+  - name_template: ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}
     image_templates:
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-amd64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-arm64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-ppc64le
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:latest-s390x
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-amd64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-arm64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-ppc64le
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-k8s:{{ if .IsNightly "nightly" "latest" }}-s390x
 signs:
   - cmd: cosign
     args:

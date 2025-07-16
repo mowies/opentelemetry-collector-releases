@@ -475,7 +475,7 @@ func (d *distribution) BuildProject() config.Project {
 }
 
 func newContainerImageManifests(dist, os string, archs []string, opts containerImageOptions) []config.DockerManifest {
-	tags := []string{`{{ .Version }}`, "latest"}
+	tags := []string{`{{ .Version }}`, "{{ if .IsNightly \"nightly\" \"latest\" }}"}
 	if os == "windows" {
 		for i, tag := range tags {
 			tags[i] = fmt.Sprintf("%s-%s-%s", tag, os, opts.winVersion)
@@ -570,7 +570,7 @@ func dockerImageWithOS(dist, os, arch string, opts containerImageOptions) config
 		imageTemplates = append(
 			imageTemplates,
 			fmt.Sprintf("%s/%s:{{ .Version }}-%s", prefix, imageName(dist), osArch.imageTag()),
-			fmt.Sprintf("%s/%s:latest-%s", prefix, imageName(dist), osArch.imageTag()),
+			fmt.Sprintf("%s/%s:{{ if .IsNightly \"nightly\" \"latest\" }}-%s", prefix, imageName(dist), osArch.imageTag()),
 		)
 	}
 

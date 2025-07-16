@@ -32,9 +32,9 @@ dockers:
     dockerfile: Dockerfile
     image_templates:
       - mowies/opentelemetry-collector-ebpf-profiler:{{ .Version }}-amd64
-      - mowies/opentelemetry-collector-ebpf-profiler:latest-amd64
+      - mowies/opentelemetry-collector-ebpf-profiler:{{ if .IsNightly "nightly" "latest" }}-amd64
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:{{ .Version }}-amd64
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:latest-amd64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:{{ if .IsNightly "nightly" "latest" }}-amd64
     build_flag_templates:
       - --pull
       - --platform=linux/amd64
@@ -49,15 +49,15 @@ docker_manifests:
   - name_template: mowies/opentelemetry-collector-ebpf-profiler:{{ .Version }}
     image_templates:
       - mowies/opentelemetry-collector-ebpf-profiler:{{ .Version }}-amd64
-  - name_template: mowies/opentelemetry-collector-ebpf-profiler:latest
+  - name_template: mowies/opentelemetry-collector-ebpf-profiler:{{ if .IsNightly "nightly" "latest" }}
     image_templates:
-      - mowies/opentelemetry-collector-ebpf-profiler:latest-amd64
+      - mowies/opentelemetry-collector-ebpf-profiler:{{ if .IsNightly "nightly" "latest" }}-amd64
   - name_template: ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:{{ .Version }}
     image_templates:
       - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:{{ .Version }}-amd64
-  - name_template: ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:latest
+  - name_template: ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:{{ if .IsNightly "nightly" "latest" }}
     image_templates:
-      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:latest-amd64
+      - ghcr.io/mowies/opentelemetry-collector-releases/opentelemetry-collector-ebpf-profiler:{{ if .IsNightly "nightly" "latest" }}-amd64
 signs:
   - cmd: cosign
     args:
