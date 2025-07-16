@@ -441,7 +441,7 @@ func (d *distribution) BuildProject() config.Project {
 		"COSIGN_YES=true",
 		"LD_FLAGS=" + ldFlags,
 		"BUILD_FLAGS=-trimpath",
-		"CONTAINER_IMAGE_EPHEMERAL_TAG={{ if .IsNightly \"nightly\" \"latest\" }}",
+		"CONTAINER_IMAGE_EPHEMERAL_TAG={{ if .IsNightly nightly latest }}",
 	}
 	if d.goTags != "" {
 		env = append(env, "GO_TAGS="+d.goTags)
