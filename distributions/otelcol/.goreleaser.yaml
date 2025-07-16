@@ -124,6 +124,6 @@ monorepo:
 partial:
   by: target
 nightly:
-  version_template: '{{ incpatch .Version}}-nightly.{{ .Now.Format "yyyyMMddHHmm" }}'
+  version_template: '{{ incpatch .Version}}-nightly.{{ .Now.Format "200601021504" }}'
   tag_name: nightly
   publish_release: true
