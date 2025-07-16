@@ -35,8 +35,8 @@ const (
 	k8sDistro          = "otelcol-k8s"
 	otlpDistro         = "otelcol-otlp"
 	ebpfProfilerDistro = "otelcol-ebpf-profiler"
-	dockerHub          = "otel"
-	ghcr               = "ghcr.io/open-telemetry/opentelemetry-collector-releases"
+	dockerHub          = "mowies"
+	ghcr               = "ghcr.io/mowies/opentelemetry-collector-releases"
 	binaryNamePrefix   = "otelcol"
 	imageNamePrefix    = "opentelemetry-collector"
 )
@@ -58,8 +58,14 @@ var (
 			&fullBuildConfig{targetOS: "darwin", targetArch: darwinArchs},
 			&fullBuildConfig{targetOS: "windows", targetArch: winArchs},
 		}
-		d.containerImages = nil
-		d.containerImageManifests = nil
+		d.containerImages = slices.Concat(
+			newContainerImages(d.name, "linux", baseArchs, containerImageOptions{armVersion: "7"}),
+			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2019"}),
+			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2022"}),
+		)
+		d.containerImageManifests = slices.Concat(
+			newContainerImageManifests(d.name, "linux", baseArchs, containerImageOptions{}),
+		)
 	}).WithPackagingDefaults().WithDefaultConfigIncluded().Build()
 
 	// otlp distro
@@ -104,8 +110,14 @@ var (
 				},
 			},
 		}
-		d.containerImages = nil
-		d.containerImageManifests = nil
+		d.containerImages = slices.Concat(
+			newContainerImages(d.name, "linux", baseArchs, containerImageOptions{armVersion: "7"}),
+			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2019"}),
+			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2022"}),
+		)
+		d.containerImageManifests = slices.Concat(
+			newContainerImageManifests(d.name, "linux", baseArchs, containerImageOptions{}),
+		)
 	}).WithPackagingDefaults().WithDefaultConfigIncluded().Build()
 
 	// contrib build-only project
