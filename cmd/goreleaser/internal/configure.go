@@ -35,8 +35,8 @@ const (
 	k8sDistro          = "otelcol-k8s"
 	otlpDistro         = "otelcol-otlp"
 	ebpfProfilerDistro = "otelcol-ebpf-profiler"
-	dockerHub          = "otel"
-	ghcr               = "ghcr.io/open-telemetry/opentelemetry-collector-releases"
+	dockerHub          = "mowies"
+	ghcr               = "ghcr.io/mowies/opentelemetry-collector-releases"
 	binaryNamePrefix   = "otelcol"
 	imageNamePrefix    = "opentelemetry-collector"
 )
@@ -58,8 +58,14 @@ var (
 			&fullBuildConfig{targetOS: "darwin", targetArch: darwinArchs},
 			&fullBuildConfig{targetOS: "windows", targetArch: winArchs},
 		}
-		d.containerImages = nil
-		d.containerImageManifests = nil
+		d.containerImages = slices.Concat(
+			newContainerImages(d.name, "linux", baseArchs, containerImageOptions{armVersion: "7"}),
+			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2019"}),
+			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2022"}),
+		)
+		d.containerImageManifests = slices.Concat(
+			newContainerImageManifests(d.name, "linux", baseArchs, containerImageOptions{}),
+		)
 	}).WithPackagingDefaults().WithDefaultConfigIncluded().Build()
 
 	// otlp distro
@@ -121,7 +127,7 @@ var (
 			&fullBuildConfig{targetOS: "darwin", targetArch: darwinArchs},
 			&fullBuildConfig{targetOS: "windows", targetArch: winArchs},
 		}
-	}).WithBinArchive().Build()
+	}).WithBinArchive().WithNightlyConfig().Build()
 
 	// k8s distro
 	k8sDist = newDistributionBuilder(k8sDistro).WithConfigFunc(func(d *distribution) {
@@ -321,7 +327,7 @@ func (b *distributionBuilder) nightly() config.Nightly {
 		VersionTemplate:   "{{ incpatch .Version}}-nightly.{{ .Now.Format \"200601021504\" }}",
 		TagName:           "nightly",
 		PublishRelease:    true,
-		KeepSingleRelease: false,
+		KeepSingleRelease: true,
 	}
 }
 
@@ -435,7 +441,7 @@ func (d *distribution) BuildProject() config.Project {
 		"COSIGN_YES=true",
 		"LD_FLAGS=" + ldFlags,
 		"BUILD_FLAGS=-trimpath",
-		"CONTAINER_IMAGE_EPHEMERAL_TAG=latest",
+		"CONTAINER_IMAGE_EPHEMERAL_TAG={{ if .IsNightly }}nightly{{ else }}latest{{ end }}",
 	}
 	if d.goTags != "" {
 		env = append(env, "GO_TAGS="+d.goTags)
