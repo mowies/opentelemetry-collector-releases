@@ -58,14 +58,8 @@ var (
 			&fullBuildConfig{targetOS: "darwin", targetArch: darwinArchs},
 			&fullBuildConfig{targetOS: "windows", targetArch: winArchs},
 		}
-		d.containerImages = slices.Concat(
-			newContainerImages(d.name, "linux", baseArchs, containerImageOptions{armVersion: "7"}),
-			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2019"}),
-			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2022"}),
-		)
-		d.containerImageManifests = slices.Concat(
-			newContainerImageManifests(d.name, "linux", baseArchs, containerImageOptions{}),
-		)
+		d.containerImages = nil
+		d.containerImageManifests = nil
 	}).WithPackagingDefaults().WithDefaultConfigIncluded().Build()
 
 	// otlp distro
@@ -110,14 +104,8 @@ var (
 				},
 			},
 		}
-		d.containerImages = slices.Concat(
-			newContainerImages(d.name, "linux", baseArchs, containerImageOptions{armVersion: "7"}),
-			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2019"}),
-			newContainerImages(d.name, "windows", winContainerArchs, containerImageOptions{winVersion: "2022"}),
-		)
-		d.containerImageManifests = slices.Concat(
-			newContainerImageManifests(d.name, "linux", baseArchs, containerImageOptions{}),
-		)
+		d.containerImages = nil
+		d.containerImageManifests = nil
 	}).WithPackagingDefaults().WithDefaultConfigIncluded().Build()
 
 	// contrib build-only project
