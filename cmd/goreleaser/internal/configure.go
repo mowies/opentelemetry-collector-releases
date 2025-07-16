@@ -137,7 +137,7 @@ var (
 		d.containerImageManifests = slices.Concat(
 			newContainerImageManifests(d.name, "linux", k8sArchs, containerImageOptions{}),
 		)
-	}).WithDefaultArchives().WithDefaultChecksum().WithDefaultSigns().WithDefaultDockerSigns().WithDefaultSBOMs().Build()
+	}).WithDefaultArchives().WithDefaultChecksum().WithDefaultSigns().WithDefaultDockerSigns().WithDefaultSBOMs().WithNightlyConfig().Build()
 
 	// ebpf-profiler distro
 	ebpfProfilerDist = newDistributionBuilder(ebpfProfilerDistro).WithConfigFunc(func(d *distribution) {
@@ -309,6 +309,22 @@ func (b *distributionBuilder) dockerSigns() []config.Sign {
 	}
 }
 
+func (b *distributionBuilder) WithNightlyConfig() *distributionBuilder {
+	b.configFuncs = append(b.configFuncs, func(d *distribution) {
+		b.dist.nightly = b.nightly()
+	})
+	return b
+}
+
+func (b *distributionBuilder) nightly() config.Nightly {
+	return config.Nightly{
+		VersionTemplate:   "{{ incpatch .Version}}-nightly.{{ .Now.Format 200607310413 }}",
+		TagName:           "nightly",
+		PublishRelease:    true,
+		KeepSingleRelease: false,
+	}
+}
+
 func (b *distributionBuilder) WithDefaultSBOMs() *distributionBuilder {
 	b.configFuncs = append(b.configFuncs, func(d *distribution) {
 		d.sboms = b.sboms()
@@ -345,7 +361,8 @@ func (b *distributionBuilder) WithPackagingDefaults() *distributionBuilder {
 		WithDefaultMSIConfig().
 		WithDefaultSigns().
 		WithDefaultDockerSigns().
-		WithDefaultSBOMs()
+		WithDefaultSBOMs().
+		WithNightlyConfig()
 }
 
 func (b *distributionBuilder) WithConfigFunc(configFunc func(*distribution)) *distributionBuilder {
@@ -396,6 +413,7 @@ type distribution struct {
 	signs                   []config.Sign
 	dockerSigns             []config.Sign
 	sboms                   []config.SBOM
+	nightly                 config.Nightly
 	checksum                config.Checksum
 	enableCgo               bool
 	ldFlags                 string
@@ -441,6 +459,7 @@ func (d *distribution) BuildProject() config.Project {
 		Signs:           d.signs,
 		DockerSigns:     d.dockerSigns,
 		SBOMs:           d.sboms,
+		Nightly:         d.nightly,
 		Version:         2,
 		Monorepo: config.Monorepo{
 			TagPrefix: "v",
