@@ -1,14 +1,16 @@
-FROM alpine:3.22@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715
+FROM ghcr.io/linuxcontainers/alpine:3.20 as certs
 RUN apk --update add ca-certificates
 
-ARG SERVICE_NAME=opampsupervisor
+FROM scratch
 
-RUN addgroup --gid 10001 --system ${SERVICE_NAME} && \
-    adduser --ingroup ${SERVICE_NAME} --shell /bin/false \
-    --disabled-password --uid 10001 ${SERVICE_NAME}
+ARG SERVICE_NAME=opampsupervisor
+ARG USER_UID=10001
+ARG USER_GID=10001
+USER ${USER_UID}:${USER_GID}
 
 USER ${SERVICE_NAME}
 WORKDIR /home/${SERVICE_NAME}
 
+COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --chmod=755 opampsupervisor /usr/local/bin/opampsupervisor
 ENTRYPOINT [ "opampsupervisor" ]
