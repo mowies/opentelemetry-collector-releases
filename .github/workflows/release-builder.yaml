@@ -25,7 +25,7 @@ jobs:
 
       - name: Set GORELEASER_PREVIOUS_TAG in actual release
         id: prev-tag
-        if: !contains(github.ref, '-nightly')
+        if: ${{ !contains(github.ref, '-nightly') }}
         # find previous tag by filtering out nightly tags and choosing the
         # second to last tag (last one is the current release)
         # TODO fix this filter to only filter builder tags
@@ -35,7 +35,7 @@ jobs:
 
       - name: Set nightly enabled
         id: nightly-check
-        if: contains(github.ref, '-nightly')
+        if: ${{ contains(github.ref, '-nightly') }}
         run: |
           echo "NIGHTLY_FLAG=--nightly" >> "$GITHUB_OUTPUT"
 
