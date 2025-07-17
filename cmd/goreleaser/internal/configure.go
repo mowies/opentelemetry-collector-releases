@@ -326,7 +326,8 @@ func (b *distributionBuilder) WithNightlyConfig() *distributionBuilder {
 func (b *distributionBuilder) nightly() config.Nightly {
 	return config.Nightly{
 		VersionTemplate:   "{{ incpatch .Version}}-nightly.{{ .Now.Format \"200601021504\" }}",
-		PublishRelease:    false,
+		TagName:           "nightly",
+		PublishRelease:    true,
 		KeepSingleRelease: true,
 	}
 }
