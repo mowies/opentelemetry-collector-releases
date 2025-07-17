@@ -49,7 +49,8 @@ var (
 	k8sArchs          = []string{"amd64", "arm64", "ppc64le", "s390x"}
 	ebpfProfilerArchs = []string{"amd64"}
 
-	imageRepos = []string{dockerHub, ghcr}
+	// imageRepos = []string{dockerHub, ghcr}
+	imageRepos = []string{ghcr}
 
 	// otelcol (core) distro
 	otelColDist = newDistributionBuilder(coreDistro).WithConfigFunc(func(d *distribution) {
