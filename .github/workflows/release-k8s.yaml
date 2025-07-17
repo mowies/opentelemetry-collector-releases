@@ -17,7 +17,7 @@ jobs:
     permissions: write-all
   release-windows:
     name: Release k8s (Windows)
-    if: !contains(github.ref, '-nightly')
+    if: ${{ !contains(github.ref, '-nightly') }}
     uses: ./.github/workflows/base-release.yaml
     with:
       distribution: otelcol-k8s
