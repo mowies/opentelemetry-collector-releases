@@ -4,7 +4,7 @@ GORELEASER ?= goreleaser
 # SRC_ROOT is the top of the source tree.
 SRC_ROOT := $(shell git rev-parse --show-toplevel)
 
-# renovate: datasource=github-releases packageName=opentelemetry/opentelemetry-collector
+# renovate: datasource=github-releases depName=OCB packageName=opentelemetry/opentelemetry-collector
 OTELCOL_BUILDER_VERSION ?= 0.138.0
 
 OTELCOL_BUILDER_DIR ?= ${HOME}/bin
